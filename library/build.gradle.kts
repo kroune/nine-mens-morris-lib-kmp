@@ -52,7 +52,7 @@ mavenPublishing {
 
     pom {
         name = "Nine men's morris library"
-        description = "library for game \"nine mens morris\" "
+        description = "library for game \"nine mens morris\""
         inceptionYear = "2024"
         url = "https://github.com/kroune/nine-mens-morris-lib-kmp/"
         licenses {
