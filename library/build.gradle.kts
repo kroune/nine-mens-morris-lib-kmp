@@ -1,5 +1,6 @@
 import com.vanniktech.maven.publish.SonatypeHost
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -24,6 +25,8 @@ kotlin {
     iosArm64()
     iosSimulatorArm64()
     linuxX64()
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs()
 
     sourceSets {
         commonMain.dependencies {
@@ -48,7 +51,7 @@ mavenPublishing {
 
     signAllPublications()
 
-    coordinates(group.toString(), "library", version.toString())
+    coordinates(group.toString(), "nineMensMorris", version.toString())
 
     pom {
         name = "Nine men's morris library"
