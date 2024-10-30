@@ -36,7 +36,7 @@ kotlin {
 }
 
 android {
-    namespace = "io.github.kroune.nine-mens-morris.library"
+    namespace = "io.github.kroune.nine.mens.morris.library"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()
