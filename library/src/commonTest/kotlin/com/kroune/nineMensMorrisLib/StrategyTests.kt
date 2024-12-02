@@ -21,6 +21,7 @@ package com.kroune.nineMensMorrisLib
 
 import com.kroune.nineMensMorrisLib.positions.Strategy
 import kotlin.test.Test
+import kotlin.test.assertContains
 import kotlin.test.assertEquals
 
 @Suppress("unused")
@@ -53,5 +54,35 @@ class StrategyTests : Strategy() {
     fun `winning test5`() {
         val ourResult = position5.findBestMove(4u)
         assertEquals(ourResult, correctResult5)
+    }
+
+
+    @Test
+    fun `winning test6-1`() {
+        val ourResult = position6.findBestMove(1u)
+        assertContains(correctResults6, ourResult)
+    }
+
+    @Test
+    fun `winning test6-2`() {
+        val ourResult = position6.findBestMove(2u)
+        assertContains(correctResults6, ourResult)
+    }
+    @Test
+    fun `winning test6-3`() {
+        val ourResult = position6.findBestMove(3u)
+        assertContains(correctResults6, ourResult)
+    }
+
+    @Test
+    fun `winning test6-4`() {
+        val ourResult = position6.findBestMove(4u)
+        assertContains(correctResults6, ourResult)
+    }
+
+    @Test
+    fun `winning test6-5`() {
+        val ourResult = position6.findBestMove(5u)
+        assertContains(correctResults6, ourResult)
     }
 }

@@ -111,6 +111,23 @@ open class Strategy {
 
     val correctResult5 = Movement(null, 22)
 
+
+    val position6 = Position(
+        // @formatter:off
+        arrayOf(
+            BLUE_,                  BLUE_,                  EMPTY,
+                    BLUE_,          BLUE_,          EMPTY,
+                            EMPTY,  EMPTY,  GREEN,
+            GREEN,  GREEN,  BLUE_,          EMPTY,  BLUE_,  EMPTY,
+                            EMPTY,  BLUE_,  EMPTY,
+                    GREEN,          GREEN,          BLUE_,
+            GREEN,                  GREEN,                  BLUE_
+        ),
+        // @formatter:on
+        0u, 0u, pieceToMove = false, removalCount = 0u
+    )
+
+    val correctResults6 = listOf(Movement(4, 5), Movement(13, 5))
     /*
     0-----------------1-----------------2
     |                 |                 |

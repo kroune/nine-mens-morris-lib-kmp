@@ -51,6 +51,7 @@ class Position(
 ) {
     /**
      * evaluates position
+     * depth decreases at the higher depth
      * @return advantage of the green player
      */
     fun evaluate(depth: UByte = 0u): Int {
@@ -60,14 +61,14 @@ class Position(
         run {
             if (greenPiecesAmount < PIECES_TO_FLY) {
                 val depthCost = depth.toInt() * DEPTH_COST
-                greenEvaluation = LOST_GAME_COST + depthCost
-                blueEvaluation = WON_GAME_COST - depthCost
+                greenEvaluation = LOST_GAME_COST - depthCost
+                blueEvaluation = WON_GAME_COST + depthCost
                 return@run
             }
             if (bluePiecesAmount < PIECES_TO_FLY) {
                 val depthCost = depth.toInt() * DEPTH_COST
-                greenEvaluation = WON_GAME_COST - depthCost
-                blueEvaluation = LOST_GAME_COST + depthCost
+                greenEvaluation = WON_GAME_COST + depthCost
+                blueEvaluation = LOST_GAME_COST - depthCost
                 return@run
             }
 
@@ -127,8 +128,8 @@ class Position(
             }
         }
         return Pair(
-            Pair(greenUnfinishedTriples, blueUnfinishedTriples),
-            Pair(greenBlockedTriples, blueBlockedTriples)
+            greenUnfinishedTriples to blueUnfinishedTriples,
+            greenBlockedTriples to blueBlockedTriples
         )
     }
 
@@ -142,9 +143,6 @@ class Position(
     }
 
     /**
-     * this function is marked as [suspend] because it usually performs heavy operations
-     * doing this makes shooting oneself in the foot a bit harder
-     *
      * actual minimax search
      * we want to separate them, because it allows us to forget about storing move sequence,
      * which greatly improves performance, more over, minimax gets less precise at the last moves (because it doesn't
@@ -175,7 +173,7 @@ class Position(
              * if we can perform an additional move we don't need to decrease depth
              * in order not to fuck up evaluation sorting
              */
-            val shouldNotDecreaseDepth = (pos.removalCount > 0u && !gameEnded())
+            val shouldNotDecreaseDepth = (pos.removalCount > 0u && !pos.gameEnded())
             val result = if (shouldNotDecreaseDepth) {
                 pos.analyze(depth)
             } else {
@@ -189,7 +187,12 @@ class Position(
         }
         // it means that we can't make any move, so we lost
         if (bestEvaluation == defaultValue) {
-            bestEvaluation = LOST_GAME_COST + depthCost - WON_GAME_COST
+            // we calculate bes
+            bestEvaluation = if (pieceToMove) {
+                (LOST_GAME_COST - depthCost) - (WON_GAME_COST + depthCost)
+            } else {
+                - (LOST_GAME_COST - depthCost) + (WON_GAME_COST + depthCost)
+            }
         }
         Cache.addCache(this, depth, bestEvaluation)
         return bestEvaluation
@@ -206,8 +209,13 @@ class Position(
         val positions: MutableList<Pair<Int, Movement>> = mutableListOf()
         generateMoves().forEach {
             val pos = it.producePosition(this)
-            val evaluation = pos.analyze((depth - 1u).toUByte())
-            positions.add(Pair(evaluation, it))
+            val shouldNotDecreaseDepth = (pos.removalCount > 0u && !pos.gameEnded())
+            val evaluation = if (shouldNotDecreaseDepth) {
+                pos.analyze(depth)
+            } else {
+                pos.analyze((depth - 1u).toUByte())
+            }
+            positions.add(evaluation to it)
         }
         // now we simply sort them
         return positions.maxByOrNull {
