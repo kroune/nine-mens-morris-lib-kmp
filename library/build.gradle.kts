@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "io.github.kroune"
-version = "1.0.2"
+version = "1.0.3"
 
 kotlin {
     jvm()
@@ -28,6 +28,7 @@ kotlin {
     linuxX64()
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs()
+    js()
 
     sourceSets {
         commonMain.dependencies {
