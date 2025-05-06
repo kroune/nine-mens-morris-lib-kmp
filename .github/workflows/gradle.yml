@@ -85,7 +85,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.repository_name }}-${{ matrix.tag }}-benchmark
-          path: benchmark/build/reports/benchmark/main/*.json
+          path: benchmark/build/reports/benchmark/main/
 
   runTests:
     strategy:
@@ -163,10 +163,4 @@ jobs:
             benchmark/.gradle
             library/build
             library/.gradle
-          key: ${{ runner.os }}-benchmark-${{ matrix.tag }}-${{ hashFiles('**/libs.versions.toml') }}-${{ github.run_id }}
-
-      - name: Upload benchmark to github
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ env.repository_name }}-${{ matrix.tag }}-benchmark
-          path: benchmark/build/reports/benchmark/main/*.json
+          key: ${{ runner.os }}-test-${{ matrix.tag }}-${{ hashFiles('**/libs.versions.toml') }}-${{ github.run_id }}
