@@ -205,8 +205,9 @@ class Position(
     fun findBestMove(
         depth: UByte
     ): Movement? {
-        // for all possible positions, we try to analyze them
-        val positions: MutableList<Pair<Int, Movement>> = mutableListOf()
+        // if (pieceToMove)  then we get a maximum evaluation else -> minimum
+        var bestEvaluation: Int = if (pieceToMove) Int.MIN_VALUE else Int.MAX_VALUE
+        var bestMove: Movement? = null
         generateMoves().forEach {
             val pos = it.producePosition(this)
             val shouldNotDecreaseDepth = (pos.removalCount > 0u && !pos.gameEnded())
@@ -215,12 +216,19 @@ class Position(
             } else {
                 pos.analyze((depth - 1u).toUByte())
             }
-            positions.add(evaluation to it)
+            if (pieceToMove) {
+                if (evaluation > bestEvaluation) {
+                    bestMove = it
+                    bestEvaluation = evaluation
+                }
+            } else {
+                if (evaluation < bestEvaluation) {
+                    bestMove = it
+                    bestEvaluation = evaluation
+                }
+            }
         }
-        // now we simply sort them
-        return positions.maxByOrNull {
-            if (pieceToMove) it.first else -it.first
-        }?.second
+        return bestMove
     }
 
     /**

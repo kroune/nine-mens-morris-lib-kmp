@@ -17,17 +17,24 @@
  *
  * Contact: kr0ne@tuta.io
  */
+
 package com.kroune.nineMensMorrisLib
 
-import com.kroune.nineMensMorrisLib.positions.Benchmark
-import kotlin.test.AfterTest
-import kotlin.test.Test
+import kotlinx.benchmark.BenchmarkMode
+import kotlinx.benchmark.BenchmarkTimeUnit
+import kotlinx.benchmark.Blackhole
+import kotlinx.benchmark.Mode
+import kotlinx.benchmark.OutputTimeUnit
+import kotlinx.benchmark.Scope
+import kotlinx.benchmark.State
 import kotlin.time.measureTime
 
 @Suppress("unused")
+@BenchmarkMode(Mode.AverageTime)
+@OutputTimeUnit(BenchmarkTimeUnit.MILLISECONDS)
+@State(Scope.Benchmark)
 class BenchmarkTest : Benchmark() {
     // this test takes more time and not very useful most of the time
-    @Test
     fun benchmark() {
         val time = measureTime {
             benchmark1.findBestMove(6u)
@@ -49,13 +56,11 @@ class BenchmarkTest : Benchmark() {
     7394
      */
 
-    @Test
-    fun benchmark2() {
-        val time = measureTime {
-            benchmark2.findBestMove(4u)
-        }.inWholeMilliseconds
-        // TODO: replace with JMH tests
-        println(time)
+    @kotlinx.benchmark.Benchmark
+    fun benchmark2(bh: Blackhole) {
+        val move = benchmark2.findBestMove(4u)
+        bh.consume(move)
+        Cache.wipeCache()
     }
 
     /*
@@ -70,9 +75,4 @@ class BenchmarkTest : Benchmark() {
     1160
     1185
      */
-
-    @AfterTest
-    fun resetCache() {
-        Cache.wipeCache()
-    }
 }

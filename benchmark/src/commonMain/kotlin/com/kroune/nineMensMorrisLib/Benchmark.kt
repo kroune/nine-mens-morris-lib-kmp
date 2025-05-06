@@ -17,12 +17,8 @@
  *
  * Contact: kr0ne@tuta.io
  */
-package com.kroune.nineMensMorrisLib.positions
 
-import com.kroune.nineMensMorrisLib.BLUE_
-import com.kroune.nineMensMorrisLib.EMPTY
-import com.kroune.nineMensMorrisLib.GREEN
-import com.kroune.nineMensMorrisLib.Position
+package com.kroune.nineMensMorrisLib
 
 open class Benchmark {
     val benchmark1 = Position(
