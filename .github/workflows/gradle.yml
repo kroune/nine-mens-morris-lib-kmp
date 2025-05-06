@@ -29,23 +29,24 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-#
-#      - name: Cache KMP tooling
-#        uses: actions/cache/restore@v4
-#        with:
-#          path: |
-#            ~/.konan
-#            ~/.gradle/caches
-#            ~/.gradle/wrapper
-#            .gradle
-#            build
-#            benchmark/build
-#            benchmark/.gradle
-#            library/build
-#            library/.gradle
-#          key: ${{ runner.os }}-benchmark-${{ matrix.tag }}-${{ hashFiles('**/libs.versions.toml') }}-${{ github.run_id }}
-#          restore-keys: |
-#            ${{ runner.os }}-benchmark-${{ matrix.tag }}-${{ hashFiles('**/libs.versions.toml') }}
+
+      - name: Cache KMP tooling
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            ~/.konan
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+            /tmp/benchmarks*
+            .gradle
+            build
+            benchmark/build
+            benchmark/.gradle
+            library/build
+            library/.gradle
+          key: ${{ runner.os }}-benchmark-${{ matrix.tag }}-${{ hashFiles('**/libs.versions.toml') }}-${{ github.run_id }}
+          restore-keys: |
+            ${{ runner.os }}-benchmark-${{ matrix.tag }}-${{ hashFiles('**/libs.versions.toml') }}
 
       - name: enable KVM
         if: runner.os == 'Linux'
