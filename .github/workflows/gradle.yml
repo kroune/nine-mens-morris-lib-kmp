@@ -76,6 +76,7 @@ jobs:
             ~/.konan
             ~/.gradle/caches
             ~/.gradle/wrapper
+            /tmp/benchmarks*
             .gradle
             build
             benchmark/build
