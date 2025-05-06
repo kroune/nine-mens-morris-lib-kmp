@@ -7,7 +7,6 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.vanniktech.mavenPublish)
-    alias(libs.plugins.kotlinx.serialization)
 }
 
 group = "io.github.kroune"
@@ -28,12 +27,17 @@ kotlin {
     linuxX64()
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs()
-    js()
+    js {
+        nodejs {
+            testTask {
+                useMocha {
+                    timeout = "10s"
+                }
+            }
+        }
+    }
 
     sourceSets {
-        commonMain.dependencies {
-            implementation(libs.kotlinx.serialization.json)
-        }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }

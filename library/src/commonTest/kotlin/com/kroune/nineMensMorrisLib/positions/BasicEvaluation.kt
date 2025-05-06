@@ -25,7 +25,7 @@ import com.kroune.nineMensMorrisLib.GREEN
 import com.kroune.nineMensMorrisLib.Position
 
 open class BasicEvaluation {
-    val blueWinning1 = Position(
+    val positionWithBlueWinning1 = Position(
         // @formatter:off
         arrayOf(
             BLUE_,                  BLUE_,                  BLUE_,
@@ -40,7 +40,7 @@ open class BasicEvaluation {
         pieceToMove = true
     )
 
-    val blueWinning2 = Position(
+    val positionWithBlueWinning2 = Position(
         // @formatter:off
         arrayOf(
             BLUE_,                  BLUE_,                  EMPTY,
@@ -55,7 +55,7 @@ open class BasicEvaluation {
         0u, 1u, pieceToMove = false
     )
 
-    val blueWinning3 = Position(
+    val positionWithBlueWinning3 = Position(
         // @formatter:off
         arrayOf(
             BLUE_,                  BLUE_,                  EMPTY,
@@ -70,7 +70,7 @@ open class BasicEvaluation {
         0u, 0u, pieceToMove = true
     )
 
-    val blueWinning4 = Position(
+    val positionWithBlueWinning4 = Position(
         // @formatter:off
         arrayOf(
             BLUE_,                  BLUE_,                  EMPTY,
@@ -85,7 +85,7 @@ open class BasicEvaluation {
         0u, 1u, pieceToMove = true
     )
 
-    val greenWinning1 = Position(
+    val positionWithGreenWinning1 = Position(
         // @formatter:off
         arrayOf(
             BLUE_,                  BLUE_,                  EMPTY,
@@ -100,7 +100,7 @@ open class BasicEvaluation {
         pieceToMove = false
     )
 
-    val greenWinning2 = Position(
+    val positionWithGreenWinning2 = Position(
         // @formatter:off
         arrayOf(
             BLUE_,                  EMPTY,                  BLUE_,
@@ -115,7 +115,7 @@ open class BasicEvaluation {
         pieceToMove = false
     )
 
-    val greenWinning3 = Position(
+    val positionWithGreenWinning3 = Position(
         // @formatter:off
         arrayOf(
             EMPTY,                  EMPTY,                  BLUE_,
@@ -130,7 +130,7 @@ open class BasicEvaluation {
         pieceToMove = false
     )
 
-    val greenWinning4 = Position(
+    val positionWithGreenWinning4 = Position(
         // @formatter:off
         arrayOf(
             EMPTY,                  EMPTY,                  BLUE_,

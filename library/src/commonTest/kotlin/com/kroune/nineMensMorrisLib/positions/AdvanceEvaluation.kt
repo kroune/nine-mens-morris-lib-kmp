@@ -25,7 +25,7 @@ import com.kroune.nineMensMorrisLib.GREEN
 import com.kroune.nineMensMorrisLib.Position
 
 open class AdvanceEvaluation {
-    val greenWinning1 = Position(
+    val positionWithGreenWinning1 = Position(
         // @formatter:off
         arrayOf(
             BLUE_,                  EMPTY,                  EMPTY,
@@ -41,7 +41,7 @@ open class AdvanceEvaluation {
     )
 
 
-    val draw1 = Position(
+    val positionWithDraw1 = Position(
         // @formatter:off
         arrayOf(
             EMPTY,                  EMPTY,                  EMPTY,
@@ -56,7 +56,7 @@ open class AdvanceEvaluation {
         7u, 6u, pieceToMove = true
     )
 
-    val blueWinning1 = Position(
+    val positionWithBlueWinning1 = Position(
         // @formatter:off
         arrayOf(
             BLUE_,                  GREEN,                  EMPTY,
@@ -71,7 +71,7 @@ open class AdvanceEvaluation {
         5u, 5u, pieceToMove = false
     )
 
-    val blueWinning2 = Position(
+    val positionWithBlueWinning2 = Position(
         // @formatter:off
         arrayOf(
             BLUE_,                  GREEN,                  EMPTY,

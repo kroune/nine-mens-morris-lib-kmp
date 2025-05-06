@@ -26,21 +26,21 @@ import kotlin.test.assertEquals
 @Suppress("unused")
 class UnfinishedTriplesEvaluationTest : UnfinishedTriplesEvaluation() {
     @Test
-    fun draw1() {
+    fun positionWithDraw1() {
         assertEquals(
             draw1.triplesEvaluation().first, Pair(1, 1)
         )
     }
 
     @Test
-    fun greenWinning1() {
+    fun positionWithGreenWinning1() {
         assertEquals(
             greenWinning1.triplesEvaluation().first, Pair(1, 1)
         )
     }
 
     @Test
-    fun greenWinning2() {
+    fun positionWithGreenWinning2() {
         assertEquals(
             greenWinning2.triplesEvaluation().first, Pair(1, 0)
         )

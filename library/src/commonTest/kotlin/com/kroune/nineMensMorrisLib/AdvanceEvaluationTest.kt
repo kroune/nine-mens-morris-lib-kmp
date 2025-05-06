@@ -27,21 +27,21 @@ import kotlin.test.assertEquals
 class AdvanceEvaluationTest : AdvanceEvaluation() {
     @Test
     fun greenWinning1() {
-        assertEquals(greenWinning1.evaluate(), 195)
+        assertEquals(positionWithGreenWinning1.evaluate(), 195)
     }
 
     @Test
     fun draw1() {
-        assertEquals(draw1.evaluate(), 0)
+        assertEquals(positionWithDraw1.evaluate(), 0)
     }
 
     @Test
     fun blueWinning1() {
-        assertEquals(blueWinning1.evaluate(), -20202)
+        assertEquals(positionWithBlueWinning1.evaluate(), -20202)
     }
 
     @Test
     fun blueWinning2() {
-        assertEquals(blueWinning2.evaluate(), -20000)
+        assertEquals(positionWithBlueWinning2.evaluate(), -20000)
     }
 }
