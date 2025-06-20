@@ -1,4 +1,4 @@
-name: Java CI with Gradle
+name: run benchmarks and tests
 
 on:
   workflow_dispatch:
@@ -81,7 +81,7 @@ jobs:
             benchmark/.gradle
             library/build
             library/.gradle
-          key: ${{ runner.os }}-benchmark-${{ matrix.tag }}-${{ hashFiles('**/libs.versions.toml') }}-${{ github.run_id }}
+          key: benchmark-${{ matrix.tag }}-${{ hashFiles('**/libs.versions.toml') }}-${{ github.run_id }}
 
       - name: Upload benchmark to github
         uses: actions/upload-artifact@v4
