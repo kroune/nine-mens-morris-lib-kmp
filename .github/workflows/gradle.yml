@@ -87,7 +87,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.repository_name }}-${{ matrix.tag }}-benchmark
-          path: benchmark/build/reports/benchmark/main/
+          path: benchmark/build/reports/benchmarks/main/
 
   runTests:
     strategy:
