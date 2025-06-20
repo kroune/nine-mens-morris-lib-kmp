@@ -23,6 +23,7 @@ import com.kroune.nineMensMorrisLib.move.Movement
 import com.kroune.nineMensMorrisLib.move.moveProvider
 import com.kroune.nineMensMorrisLib.move.removeChecker
 import com.kroune.nineMensMorrisLib.move.triplesMap
+import kotlinx.serialization.Serializable
 import kotlin.math.max
 import kotlin.math.min
 
@@ -38,6 +39,7 @@ import kotlin.math.min
  * @see longHashCode
  */
 @Suppress("EqualsOrHashCode", "LongParameterList")
+@Serializable
 class Position(
     var positions: Array<Boolean?>,
     var freeGreenPieces: UByte = 0u,
@@ -408,15 +410,20 @@ class Position(
      */
     override fun equals(other: Any?): Boolean {
         if (other !is Position) {
-            return super.equals(other)
+            return false
         }
-        for (i in positions.indices) {
+        if (freeGreenPieces != other.freeGreenPieces)
+            return false
+        if (freeBluePieces != other.freeBluePieces)
+            return false
+        if (pieceToMove != other.pieceToMove)
+            return false
+        for (i in 0..23) {
             if (positions[i] != other.positions[i]) {
                 return false
             }
         }
-        return freeGreenPieces == other.freeGreenPieces && freeBluePieces == other.freeBluePieces
-                && pieceToMove == other.pieceToMove
+        return true
     }
 
     /**

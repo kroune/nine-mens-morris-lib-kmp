@@ -20,6 +20,7 @@
 package com.kroune.nineMensMorrisLib.move
 
 import com.kroune.nineMensMorrisLib.Position
+import kotlinx.serialization.Serializable
 
 /**
  * used to store movement
@@ -27,6 +28,7 @@ import com.kroune.nineMensMorrisLib.Position
  * @param endIndex index of place a piece moves to
  */
 @Suppress("EqualsOrHashCode")
+@Serializable
 class Movement(val startIndex: Int?, val endIndex: Int?) {
     /**
      * @param pos position we have a more for

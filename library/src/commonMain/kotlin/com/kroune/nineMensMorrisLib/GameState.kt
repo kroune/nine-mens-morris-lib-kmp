@@ -19,9 +19,12 @@
  */
 package com.kroune.nineMensMorrisLib
 
+import kotlinx.serialization.Serializable
+
 /**
  * used for storing game state
  */
+@Serializable
 enum class GameState {
     /**
      * game starting part, we simply place pieces

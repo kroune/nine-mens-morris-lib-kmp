@@ -26,7 +26,7 @@ object Cache {
     /**
      * <Position hash code, Pair<Depth, Solve result>>
      */
-    private val localCache: HashMap<Long, Pair<UByte, Int>> = HashMap()
+    private val localCache: HashMap<Long, Pair<UByte, Int>> = HashMap(100)
 
     /**
      * adds new cache if it didn't exist, or it had lower depth
