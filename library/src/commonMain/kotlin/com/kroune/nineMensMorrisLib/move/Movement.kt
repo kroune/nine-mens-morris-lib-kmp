@@ -27,75 +27,68 @@ import kotlinx.serialization.Serializable
  * @param startIndex index of place a piece moves from
  * @param endIndex index of place a piece moves to
  */
-@Suppress("EqualsOrHashCode")
 @Serializable
-class Movement(val startIndex: Int?, val endIndex: Int?) {
+data class Movement(val startIndex: Int?, val endIndex: Int?) {
     /**
-     * @param pos position we have a more for
+     * @param oldPosition position we have a more for
      * @return position after specified move
      */
-    fun producePosition(pos: Position): Position {
-        val copy = pos.copy()
+    fun producePosition(oldPosition: Position): Position {
+        val newPosition = oldPosition.copy()
+        processStartIndexUpdate(newPosition, oldPosition)
+        processEndIndexUpdate(newPosition, oldPosition)
+        processRemovalCountUpdate(newPosition)
+        return newPosition
+    }
+
+    private fun processEndIndexUpdate(newPosition: Position, oldPosition: Position) {
         if (endIndex != null) {
-            if (copy.positions[endIndex] == copy.pieceToMove) {
-                error("illegal move $this $pos")
+            check(oldPosition.positions[endIndex] != oldPosition.pieceToMove) {
+                "illegal move $this $oldPosition"
             }
             // this happens either when we move a piece or place it
-            copy.positions[endIndex] = copy.pieceToMove
+            newPosition.positions[endIndex] = newPosition.pieceToMove
         } else {
             // this happens only when we remove smth
-            if (copy.positions[startIndex!!]!!) {
+            if (oldPosition.positions[startIndex!!]!!) {
                 // if it is true, we remove green piece
-                if (copy.greenPiecesAmount == 0.toUByte()) {
-                    error("illegal green piece count $this $pos")
+                check(oldPosition.greenPiecesAmount != 0.toUByte()) {
+                    "illegal green piece count $this $oldPosition"
                 }
-                copy.greenPiecesAmount--
+                newPosition.greenPiecesAmount--
             } else {
-                if (copy.bluePiecesAmount == 0.toUByte()) {
-                    error("illegal green piece count $this $pos")
+                check(oldPosition.bluePiecesAmount != 0.toUByte()) {
+                    "illegal green piece count $this $oldPosition"
                 }
-                copy.bluePiecesAmount--
+                newPosition.bluePiecesAmount--
             }
         }
+    }
+
+    private fun processStartIndexUpdate(newPosition: Position, oldPosition: Position) {
         if (startIndex == null) {
             // this happens when we place smth
-            if (copy.pieceToMove) {
-                copy.freeGreenPieces--
+            if (oldPosition.pieceToMove) {
+                newPosition.freeGreenPieces--
             } else {
-                copy.freeBluePieces--
+                newPosition.freeBluePieces--
             }
         } else {
-            if (copy.positions[startIndex] == null) {
-                error("illegal move $this $pos")
+            check(oldPosition.positions[startIndex] != null) {
+                "illegal move $this $oldPosition"
             }
-            copy.positions[startIndex] = null
+            newPosition.positions[startIndex] = null
         }
-        if (copy.removalCount > 1u) {
-            copy.removalCount--
+    }
+
+    private fun processRemovalCountUpdate(newPosition: Position) {
+        if (newPosition.removalCount > 1u) {
+            newPosition.removalCount--
         } else {
-            copy.removalCount = copy.removalAmount(this)
-            if (copy.removalCount == 0.toUByte()) {
-                copy.pieceToMove = !copy.pieceToMove
+            newPosition.removalCount = newPosition.removalAmount(this)
+            if (newPosition.removalCount == 0.toUByte()) {
+                newPosition.pieceToMove = !newPosition.pieceToMove
             }
         }
-        return copy
-    }
-
-    /**
-     * adds method for checking if movements are equal
-     * used for test
-     */
-    override fun equals(other: Any?): Boolean {
-        if (other is Movement) {
-            return this.startIndex == other.startIndex && this.endIndex == other.endIndex
-        }
-        return super.equals(other)
-    }
-
-    /**
-     * provides a human-readable output of the class content
-     */
-    override fun toString(): String {
-        return "Movement($startIndex, $endIndex)"
     }
 }

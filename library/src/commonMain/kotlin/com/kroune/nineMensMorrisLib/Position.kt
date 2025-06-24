@@ -491,24 +491,20 @@ class Position(
      */
     fun longHashCode(): Long {
         var result = 0L
-        // 3^30 = 205891132094649
-        result += removalCount.toInt() * 205891132094649
+        // handles removalCount (support for 0..2 removals)
+        result += removalCount.toInt() * 205891132094649 // 3^30 = 205891132094649
 
-        // 3^29 = 68630377364883
-        result += (freeGreenPieces.toInt() / 9 * 68630377364883)
-        // 3^28 = 22876792454961
-        result += (freeGreenPieces.toInt() % 9 / 3 * 22876792454961)
-        // 3^27 = 7625597484987
-        result += (freeGreenPieces.toInt() % 3 * 7625597484987)
+        // handle freeGreenPieces (split into 3 parts to handle values 0..26)
+        result += (freeGreenPieces.toInt() / 9 * 68630377364883) // 3^29 = 68630377364883
+        result += (freeGreenPieces.toInt() % 9 / 3 * 22876792454961) // 3^28 = 22876792454961
+        result += (freeGreenPieces.toInt() % 3 * 7625597484987) // 3^27 = 7625597484987
 
-        // 3^26 = 2541865828329
-        result += (freeBluePieces.toInt() / 9 * 2541865828329)
-        // 3^25 = 847288609443
-        result += (freeBluePieces.toInt() % 9 / 3 * 847288609443)
-        // 3^24 = 282429536481
-        result += (freeBluePieces.toInt() % 3 * 282429536481)
+        // Handle freeBluePieces (split into 3 parts to handle values 0..26)
+        result += (freeBluePieces.toInt() / 9 * 2541865828329) // 3^26 = 2541865828329
+        result += (freeBluePieces.toInt() % 9 / 3 * 847288609443) // 3^25 = 847288609443
+        result += (freeBluePieces.toInt() % 3 * 282429536481) // 3^24 = 282429536481
 
-        // 3^23 = 94143178827
+        // this variable will go from 3^0 = 1 up to 3^23 = 94143178827
         var pow329 = 1
         positions.forEach {
             result += when (it) {
