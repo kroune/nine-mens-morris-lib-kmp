@@ -107,7 +107,7 @@ class Position(
      * @return pair of unfinished triples (2 pieces of the same color and 1 empty)
      * and blocked triples (2 pieces of the same color and 1 of another)
      */
-    private fun triplesEvaluation(): Pair<Pair<Int, Int>, Pair<Int, Int>> {
+    internal fun triplesEvaluation(): Pair<Pair<Int, Int>, Pair<Int, Int>> {
         var greenUnfinishedTriples = 0
         var blueUnfinishedTriples = 0
         var greenBlockedTriples = 0
