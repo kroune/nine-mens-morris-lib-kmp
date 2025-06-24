@@ -114,17 +114,22 @@ class Position(
                     null -> {}
                 }
             }
-            if (greenPieces == 2 && bluePieces == 0) {
-                greenUnfinishedTriples++
-            }
-            if (greenPieces == 0 && bluePieces == 2) {
-                blueUnfinishedTriples++
-            }
-            if (greenPieces == 2 && bluePieces == 1) {
-                greenBlockedTriples++
-            }
-            if (greenPieces == 1 && bluePieces == 2) {
-                blueBlockedTriples++
+            when {
+                (greenPieces == 2 && bluePieces == 0) -> {
+                    greenUnfinishedTriples++
+                }
+
+                (greenPieces == 0 && bluePieces == 2) -> {
+                    blueUnfinishedTriples++
+                }
+
+                (greenPieces == 2 && bluePieces == 1) -> {
+                    greenBlockedTriples++
+                }
+
+                (greenPieces == 1 && bluePieces == 2) -> {
+                    blueBlockedTriples++
+                }
             }
         }
         return Pair(
@@ -143,13 +148,17 @@ class Position(
     }
 
     /**
-     * actual minimax search
+     * actual minimax search with alpha-beta pruning
      * we want to separate them, because it allows us to forget about storing move sequence,
      * which greatly improves performance, more over, minimax gets less precise at the last moves (because it doesn't
      * evaluate possible positions we can get from them enough), so there isn't any actual need to see al the sequence
+     * @param alpha best score that the maximizing player is assured
+     * @param beta best score that the minimizing player is assured
      */
     private fun analyze(
-        depth: UByte
+        depth: UByte,
+        alpha: Int = Int.MIN_VALUE,
+        beta: Int = Int.MAX_VALUE
     ): Int {
         if (depth == 0.toUByte() || gameEnded()) {
             return evaluate(depth)
@@ -160,6 +169,7 @@ class Position(
         }
         // for all possible positions, we try to solve them
         val depthCost = depth.toInt() * DEPTH_COST
+
         /**
          * this assumes evaluation is > Int.MIN_VALUE and < Int.MAX_VALUE,
          * it is better than using null as default value,
@@ -167,22 +177,35 @@ class Position(
          */
         val defaultValue = if (pieceToMove) Int.MIN_VALUE else Int.MAX_VALUE
         var bestEvaluation: Int = defaultValue
+        var currentAlpha = alpha
+        var currentBeta = beta
+
         generateMoves().forEach {
             val pos = it.producePosition(this)
+
             /**
              * if we can perform an additional move we don't need to decrease depth
              * in order not to fuck up evaluation sorting
              */
             val shouldNotDecreaseDepth = (pos.removalCount > 0u && !pos.gameEnded())
             val result = if (shouldNotDecreaseDepth) {
-                pos.analyze(depth)
+                pos.analyze(depth, currentAlpha, currentBeta)
             } else {
-                pos.analyze((depth - 1u).toUByte())
+                pos.analyze((depth - 1u).toUByte(), currentAlpha, currentBeta)
             }
-            bestEvaluation = if (pieceToMove) {
-                max(result, bestEvaluation)
+
+            if (pieceToMove) {
+                bestEvaluation = max(result, bestEvaluation)
+                currentAlpha = max(currentAlpha, bestEvaluation)
+                if (currentBeta <= currentAlpha) {
+                    return bestEvaluation // Beta cutoff
+                }
             } else {
-                min(result, bestEvaluation)
+                bestEvaluation = min(result, bestEvaluation)
+                currentBeta = min(currentBeta, bestEvaluation)
+                if (currentBeta <= currentAlpha) {
+                    return bestEvaluation // Alpha cutoff
+                }
             }
         }
         // it means that we can't make any move, so we lost
@@ -191,7 +214,7 @@ class Position(
             bestEvaluation = if (pieceToMove) {
                 (LOST_GAME_COST - depthCost) - (WON_GAME_COST + depthCost)
             } else {
-                - (LOST_GAME_COST - depthCost) + (WON_GAME_COST + depthCost)
+                -(LOST_GAME_COST - depthCost) + (WON_GAME_COST + depthCost)
             }
         }
         Cache.addCache(this, depth, bestEvaluation)
@@ -208,24 +231,30 @@ class Position(
         // if (pieceToMove)  then we get a maximum evaluation else -> minimum
         var bestEvaluation: Int = if (pieceToMove) Int.MIN_VALUE else Int.MAX_VALUE
         var bestMove: Movement? = null
+        var alpha = Int.MIN_VALUE
+        var beta = Int.MAX_VALUE
+
         generateMoves().forEach {
             val pos = it.producePosition(this)
             val shouldNotDecreaseDepth = (pos.removalCount > 0u && !pos.gameEnded())
             val evaluation = if (shouldNotDecreaseDepth) {
-                pos.analyze(depth)
+                pos.analyze(depth, alpha, beta)
             } else {
-                pos.analyze((depth - 1u).toUByte())
+                pos.analyze((depth - 1u).toUByte(), alpha, beta)
             }
+
             if (pieceToMove) {
                 if (evaluation > bestEvaluation) {
                     bestMove = it
                     bestEvaluation = evaluation
                 }
+                alpha = max(alpha, bestEvaluation)
             } else {
                 if (evaluation < bestEvaluation) {
                     bestMove = it
                     bestEvaluation = evaluation
                 }
+                beta = min(beta, bestEvaluation)
             }
         }
         return bestMove
@@ -262,7 +291,7 @@ class Position(
      * @return possible movements
      */
     fun generateMoves(): List<Movement> {
-        val generatedList = when (gameState()) {
+        return when (gameState()) {
             GameState.Placement -> {
                 generatePlacementMovements()
             }
@@ -283,64 +312,63 @@ class Position(
                 generateRemovalMoves()
             }
         }
-        return generatedList
     }
 
     private fun generateRemovalMoves(): List<Movement> {
-        val possibleMove: MutableList<Movement> = mutableListOf()
-        positions.forEachIndexed { index, piece ->
-            if (piece == !pieceToMove) {
-                possibleMove.add(Movement(index, null))
+        return buildList {
+            positions.forEachIndexed { index, piece ->
+                if (piece == !pieceToMove) {
+                    add(Movement(index, null))
+                }
             }
         }
-        return possibleMove
     }
 
     /**
      * @return all possible normal movements
      */
     private fun generateNormalMovements(): List<Movement> {
-        val possibleMove: MutableList<Movement> = mutableListOf()
-        positions.forEachIndexed { startIndex, piece ->
-            if (piece == pieceToMove) {
-                moveProvider[startIndex].forEach { endIndex ->
-                    if (positions[endIndex] == null) {
-                        possibleMove.add(Movement(startIndex, endIndex))
+        return buildList {
+            positions.forEachIndexed { startIndex, piece ->
+                if (piece == pieceToMove) {
+                    moveProvider[startIndex].forEach { endIndex ->
+                        if (positions[endIndex] == null) {
+                            add(Movement(startIndex, endIndex))
+                        }
                     }
                 }
             }
         }
-        return possibleMove
     }
 
     /**
      * @return all possible flying movements
      */
     private fun generateFlyingMovements(): List<Movement> {
-        val possibleMove: MutableList<Movement> = mutableListOf()
-        positions.forEachIndexed { startIndex, piece ->
-            if (piece == pieceToMove) {
-                positions.forEachIndexed { endIndex, endPiece ->
-                    if (endPiece == null) {
-                        possibleMove.add(Movement(startIndex, endIndex))
+        return buildList {
+            positions.forEachIndexed { startIndex, piece ->
+                if (piece == pieceToMove) {
+                    positions.forEachIndexed { endIndex, endPiece ->
+                        if (endPiece == null) {
+                            add(Movement(startIndex, endIndex))
+                        }
                     }
                 }
             }
         }
-        return possibleMove
     }
 
     /**
      * @return possible piece placements
      */
     private fun generatePlacementMovements(): List<Movement> {
-        val possibleMove: MutableList<Movement> = mutableListOf()
-        positions.forEachIndexed { endIndex, piece ->
-            if (piece == null) {
-                possibleMove.add(Movement(null, endIndex))
+        return buildList {
+            positions.forEachIndexed { endIndex, piece ->
+                if (piece == null) {
+                    add(Movement(null, endIndex))
+                }
             }
         }
-        return possibleMove
     }
 
     /**

@@ -35,36 +35,10 @@ class BenchmarkTest : Benchmark() {
         Cache.wipeCache()
     }
 
-    /*
-    9922
-    8685
-    8030
-    7825
-    7616
-    7548
-    7680
-    7501
-    7429
-    7394
-     */
-
     @kotlinx.benchmark.Benchmark
     fun benchmark2(bh: Blackhole) {
-        val move = benchmark2.findBestMove(4u)
+        val move = benchmark2.findBestMove(6u)
         bh.consume(move)
         Cache.wipeCache()
     }
-
-    /*
-    1530
-    1371
-    1259
-    1348
-    1159
-    1340
-    1163
-    1349
-    1160
-    1185
-     */
 }

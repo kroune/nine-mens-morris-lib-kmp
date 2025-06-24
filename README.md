@@ -2,7 +2,7 @@
 
 #### All information and source code are provided AS-IS, without express or implied warranties.
 
-New game position is created using [position class](src/main/kotlin/com/kroune/nineMensMorrisLib/Position.kt)
+New game position is created using [position class](library/src/commonMain/kotlin/com/kroune/nineMensMorrisLib/Position.kt)
 
 ```kotlin
     val piecePlacements = arrayOf(
@@ -42,8 +42,8 @@ and second one is winning move sequence (note: the first move is the last one in
 3. [x] create a better hash function
 4. [x] reuse piece count data
 5. [x] create transposition hash map
-6. [ ] reuse hash calculations
+6. [x] implement alpha-beta pruning (and move ordering)
 7. [ ] implement NNUE position evaluation
 8. [ ] create a table base of all possible moves (since there isn't as many positions as in chess)
-9. [ ] implement alpha-beta pruning (and move ordering)
+9. [ ] reuse hash calculations
 10. [ ] reuse possible moves generation
