@@ -1,0 +1,118 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxX64, wasmJs]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.github.kroune:library>
+final enum class com.kroune.nineMensMorrisLib/GameState : kotlin/Enum<com.kroune.nineMensMorrisLib/GameState> { // com.kroune.nineMensMorrisLib/GameState|null[0]
+    enum entry End // com.kroune.nineMensMorrisLib/GameState.End|null[0]
+    enum entry Flying // com.kroune.nineMensMorrisLib/GameState.Flying|null[0]
+    enum entry Normal // com.kroune.nineMensMorrisLib/GameState.Normal|null[0]
+    enum entry Placement // com.kroune.nineMensMorrisLib/GameState.Placement|null[0]
+    enum entry Removing // com.kroune.nineMensMorrisLib/GameState.Removing|null[0]
+
+    final val entries // com.kroune.nineMensMorrisLib/GameState.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<com.kroune.nineMensMorrisLib/GameState> // com.kroune.nineMensMorrisLib/GameState.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): com.kroune.nineMensMorrisLib/GameState // com.kroune.nineMensMorrisLib/GameState.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<com.kroune.nineMensMorrisLib/GameState> // com.kroune.nineMensMorrisLib/GameState.values|values#static(){}[0]
+
+    final object Companion : kotlinx.serialization.internal/SerializerFactory { // com.kroune.nineMensMorrisLib/GameState.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<com.kroune.nineMensMorrisLib/GameState> // com.kroune.nineMensMorrisLib/GameState.Companion.serializer|serializer(){}[0]
+        final fun serializer(kotlin/Array<out kotlinx.serialization/KSerializer<*>>...): kotlinx.serialization/KSerializer<*> // com.kroune.nineMensMorrisLib/GameState.Companion.serializer|serializer(kotlin.Array<out|kotlinx.serialization.KSerializer<*>>...){}[0]
+    }
+}
+
+final class com.kroune.nineMensMorrisLib.move/Movement { // com.kroune.nineMensMorrisLib.move/Movement|null[0]
+    constructor <init>(kotlin/Int?, kotlin/Int?) // com.kroune.nineMensMorrisLib.move/Movement.<init>|<init>(kotlin.Int?;kotlin.Int?){}[0]
+
+    final val endIndex // com.kroune.nineMensMorrisLib.move/Movement.endIndex|{}endIndex[0]
+        final fun <get-endIndex>(): kotlin/Int? // com.kroune.nineMensMorrisLib.move/Movement.endIndex.<get-endIndex>|<get-endIndex>(){}[0]
+    final val startIndex // com.kroune.nineMensMorrisLib.move/Movement.startIndex|{}startIndex[0]
+        final fun <get-startIndex>(): kotlin/Int? // com.kroune.nineMensMorrisLib.move/Movement.startIndex.<get-startIndex>|<get-startIndex>(){}[0]
+
+    final fun component1(): kotlin/Int? // com.kroune.nineMensMorrisLib.move/Movement.component1|component1(){}[0]
+    final fun component2(): kotlin/Int? // com.kroune.nineMensMorrisLib.move/Movement.component2|component2(){}[0]
+    final fun copy(kotlin/Int? = ..., kotlin/Int? = ...): com.kroune.nineMensMorrisLib.move/Movement // com.kroune.nineMensMorrisLib.move/Movement.copy|copy(kotlin.Int?;kotlin.Int?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.kroune.nineMensMorrisLib.move/Movement.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.kroune.nineMensMorrisLib.move/Movement.hashCode|hashCode(){}[0]
+    final fun producePosition(com.kroune.nineMensMorrisLib/Position): com.kroune.nineMensMorrisLib/Position // com.kroune.nineMensMorrisLib.move/Movement.producePosition|producePosition(com.kroune.nineMensMorrisLib.Position){}[0]
+    final fun toString(): kotlin/String // com.kroune.nineMensMorrisLib.move/Movement.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<com.kroune.nineMensMorrisLib.move/Movement> { // com.kroune.nineMensMorrisLib.move/Movement.$serializer|null[0]
+        final val descriptor // com.kroune.nineMensMorrisLib.move/Movement.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // com.kroune.nineMensMorrisLib.move/Movement.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // com.kroune.nineMensMorrisLib.move/Movement.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): com.kroune.nineMensMorrisLib.move/Movement // com.kroune.nineMensMorrisLib.move/Movement.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, com.kroune.nineMensMorrisLib.move/Movement) // com.kroune.nineMensMorrisLib.move/Movement.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;com.kroune.nineMensMorrisLib.move.Movement){}[0]
+    }
+
+    final object Companion { // com.kroune.nineMensMorrisLib.move/Movement.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<com.kroune.nineMensMorrisLib.move/Movement> // com.kroune.nineMensMorrisLib.move/Movement.Companion.serializer|serializer(){}[0]
+    }
+}
+
+final class com.kroune.nineMensMorrisLib/Position { // com.kroune.nineMensMorrisLib/Position|null[0]
+    constructor <init>(kotlin/Array<kotlin/Boolean?>, kotlin/Int = ..., kotlin/Int = ..., kotlin/Boolean, kotlin/Int = ...) // com.kroune.nineMensMorrisLib/Position.<init>|<init>(kotlin.Array<kotlin.Boolean?>;kotlin.Int;kotlin.Int;kotlin.Boolean;kotlin.Int){}[0]
+    constructor <init>(kotlin/Array<kotlin/Boolean?>, kotlin/UByte = ..., kotlin/UByte = ..., kotlin/UByte = ..., kotlin/UByte = ..., kotlin/Boolean, kotlin/UByte = ...) // com.kroune.nineMensMorrisLib/Position.<init>|<init>(kotlin.Array<kotlin.Boolean?>;kotlin.UByte;kotlin.UByte;kotlin.UByte;kotlin.UByte;kotlin.Boolean;kotlin.UByte){}[0]
+
+    final var freeBluePieces // com.kroune.nineMensMorrisLib/Position.freeBluePieces|{}freeBluePieces[0]
+        final fun <get-freeBluePieces>(): kotlin/UByte // com.kroune.nineMensMorrisLib/Position.freeBluePieces.<get-freeBluePieces>|<get-freeBluePieces>(){}[0]
+        final fun <set-freeBluePieces>(kotlin/UByte) // com.kroune.nineMensMorrisLib/Position.freeBluePieces.<set-freeBluePieces>|<set-freeBluePieces>(kotlin.UByte){}[0]
+    final var freeGreenPieces // com.kroune.nineMensMorrisLib/Position.freeGreenPieces|{}freeGreenPieces[0]
+        final fun <get-freeGreenPieces>(): kotlin/UByte // com.kroune.nineMensMorrisLib/Position.freeGreenPieces.<get-freeGreenPieces>|<get-freeGreenPieces>(){}[0]
+        final fun <set-freeGreenPieces>(kotlin/UByte) // com.kroune.nineMensMorrisLib/Position.freeGreenPieces.<set-freeGreenPieces>|<set-freeGreenPieces>(kotlin.UByte){}[0]
+    final var pieceToMove // com.kroune.nineMensMorrisLib/Position.pieceToMove|{}pieceToMove[0]
+        final fun <get-pieceToMove>(): kotlin/Boolean // com.kroune.nineMensMorrisLib/Position.pieceToMove.<get-pieceToMove>|<get-pieceToMove>(){}[0]
+        final fun <set-pieceToMove>(kotlin/Boolean) // com.kroune.nineMensMorrisLib/Position.pieceToMove.<set-pieceToMove>|<set-pieceToMove>(kotlin.Boolean){}[0]
+    final var positions // com.kroune.nineMensMorrisLib/Position.positions|{}positions[0]
+        final fun <get-positions>(): kotlin/Array<kotlin/Boolean?> // com.kroune.nineMensMorrisLib/Position.positions.<get-positions>|<get-positions>(){}[0]
+        final fun <set-positions>(kotlin/Array<kotlin/Boolean?>) // com.kroune.nineMensMorrisLib/Position.positions.<set-positions>|<set-positions>(kotlin.Array<kotlin.Boolean?>){}[0]
+    final var removalCount // com.kroune.nineMensMorrisLib/Position.removalCount|{}removalCount[0]
+        final fun <get-removalCount>(): kotlin/UByte // com.kroune.nineMensMorrisLib/Position.removalCount.<get-removalCount>|<get-removalCount>(){}[0]
+        final fun <set-removalCount>(kotlin/UByte) // com.kroune.nineMensMorrisLib/Position.removalCount.<set-removalCount>|<set-removalCount>(kotlin.UByte){}[0]
+
+    final fun analyze(kotlin/UByte, kotlin/Int = ..., kotlin/Int = ...): kotlin/Int // com.kroune.nineMensMorrisLib/Position.analyze|analyze(kotlin.UByte;kotlin.Int;kotlin.Int){}[0]
+    final fun copy(): com.kroune.nineMensMorrisLib/Position // com.kroune.nineMensMorrisLib/Position.copy|copy(){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.kroune.nineMensMorrisLib/Position.equals|equals(kotlin.Any?){}[0]
+    final fun evaluate(kotlin/UByte = ...): kotlin/Int // com.kroune.nineMensMorrisLib/Position.evaluate|evaluate(kotlin.UByte){}[0]
+    final fun findBestMove(kotlin/UByte): com.kroune.nineMensMorrisLib.move/Movement? // com.kroune.nineMensMorrisLib/Position.findBestMove|findBestMove(kotlin.UByte){}[0]
+    final fun gameState(): com.kroune.nineMensMorrisLib/GameState // com.kroune.nineMensMorrisLib/Position.gameState|gameState(){}[0]
+    final fun generateMoves(): kotlin.collections/List<com.kroune.nineMensMorrisLib.move/Movement> // com.kroune.nineMensMorrisLib/Position.generateMoves|generateMoves(){}[0]
+    final fun toString(): kotlin/String // com.kroune.nineMensMorrisLib/Position.toString|toString(){}[0]
+    final fun uniqueHashCode(): kotlin/Long // com.kroune.nineMensMorrisLib/Position.uniqueHashCode|uniqueHashCode(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<com.kroune.nineMensMorrisLib/Position> { // com.kroune.nineMensMorrisLib/Position.$serializer|null[0]
+        final val descriptor // com.kroune.nineMensMorrisLib/Position.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // com.kroune.nineMensMorrisLib/Position.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // com.kroune.nineMensMorrisLib/Position.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): com.kroune.nineMensMorrisLib/Position // com.kroune.nineMensMorrisLib/Position.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, com.kroune.nineMensMorrisLib/Position) // com.kroune.nineMensMorrisLib/Position.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;com.kroune.nineMensMorrisLib.Position){}[0]
+    }
+
+    final object Companion { // com.kroune.nineMensMorrisLib/Position.Companion|null[0]
+        final val $childSerializers // com.kroune.nineMensMorrisLib/Position.Companion.$childSerializers|{}$childSerializers[0]
+
+        final fun serializer(): kotlinx.serialization/KSerializer<com.kroune.nineMensMorrisLib/Position> // com.kroune.nineMensMorrisLib/Position.Companion.serializer|serializer(){}[0]
+    }
+}
+
+final object com.kroune.nineMensMorrisLib/Cache { // com.kroune.nineMensMorrisLib/Cache|null[0]
+    final fun addCache(com.kroune.nineMensMorrisLib/Position, kotlin/UByte, kotlin/Int) // com.kroune.nineMensMorrisLib/Cache.addCache|addCache(com.kroune.nineMensMorrisLib.Position;kotlin.UByte;kotlin.Int){}[0]
+    final fun getCache(com.kroune.nineMensMorrisLib/Position, kotlin/UByte): kotlin/Int? // com.kroune.nineMensMorrisLib/Cache.getCache|getCache(com.kroune.nineMensMorrisLib.Position;kotlin.UByte){}[0]
+    final fun wipeCache() // com.kroune.nineMensMorrisLib/Cache.wipeCache|wipeCache(){}[0]
+}
+
+final const val com.kroune.nineMensMorrisLib/BLUE_ // com.kroune.nineMensMorrisLib/BLUE_|{}BLUE_[0]
+    final fun <get-BLUE_>(): kotlin/Boolean // com.kroune.nineMensMorrisLib/BLUE_.<get-BLUE_>|<get-BLUE_>(){}[0]
+final const val com.kroune.nineMensMorrisLib/GREEN // com.kroune.nineMensMorrisLib/GREEN|{}GREEN[0]
+    final fun <get-GREEN>(): kotlin/Boolean // com.kroune.nineMensMorrisLib/GREEN.<get-GREEN>|<get-GREEN>(){}[0]
+
+final val com.kroune.nineMensMorrisLib/EMPTY // com.kroune.nineMensMorrisLib/EMPTY|{}EMPTY[0]
+    final inline fun <get-EMPTY>(): kotlin/Boolean? // com.kroune.nineMensMorrisLib/EMPTY.<get-EMPTY>|<get-EMPTY>(){}[0]
+final val com.kroune.nineMensMorrisLib/gameStartPosition // com.kroune.nineMensMorrisLib/gameStartPosition|{}gameStartPosition[0]
+    final fun <get-gameStartPosition>(): com.kroune.nineMensMorrisLib/Position // com.kroune.nineMensMorrisLib/gameStartPosition.<get-gameStartPosition>|<get-gameStartPosition>(){}[0]

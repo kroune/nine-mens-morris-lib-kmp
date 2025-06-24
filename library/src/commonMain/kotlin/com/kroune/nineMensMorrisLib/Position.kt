@@ -36,7 +36,7 @@ import kotlin.math.min
  * @param bluePiecesAmount used for fast evaluation & game state checker (stores blue pieces)
  * @param pieceToMove piece going to move next
  * @param removalCount number of pieces to remove <= 2
- * @see longHashCode
+ * @see uniqueHashCode
  */
 @Suppress("EqualsOrHashCode", "LongParameterList")
 @Serializable
@@ -44,11 +44,25 @@ class Position(
     var positions: Array<Boolean?>,
     var freeGreenPieces: UByte = 0u,
     var freeBluePieces: UByte = 0u,
-    var greenPiecesAmount: UByte = ((positions.count { it == true }.toUByte() + freeGreenPieces).toUByte()),
-    var bluePiecesAmount: UByte = (positions.count { it == false }.toUByte() + freeBluePieces).toUByte(),
+    internal var greenPiecesAmount: UByte = ((positions.count { it == true }.toUByte() + freeGreenPieces).toUByte()),
+    internal var bluePiecesAmount: UByte = (positions.count { it == false }.toUByte() + freeBluePieces).toUByte(),
     var pieceToMove: Boolean,
     var removalCount: UByte = 0u
 ) {
+    constructor(
+        positions: Array<Boolean?>,
+        freeGreenPieces: Int = 0,
+        freeBluePieces: Int = 0,
+        pieceToMove: Boolean,
+        removalCount: Int = 0
+    ) : this(
+        positions = positions,
+        freeGreenPieces = freeGreenPieces.toUByte(),
+        freeBluePieces = freeBluePieces.toUByte(),
+        pieceToMove = pieceToMove,
+        removalCount = removalCount.toUByte()
+    )
+
     /**
      * evaluates position
      * depth decreases at the higher depth
@@ -93,7 +107,7 @@ class Position(
      * @return pair of unfinished triples (2 pieces of the same color and 1 empty)
      * and blocked triples (2 pieces of the same color and 1 of another)
      */
-    fun triplesEvaluation(): Pair<Pair<Int, Int>, Pair<Int, Int>> {
+    private fun triplesEvaluation(): Pair<Pair<Int, Int>, Pair<Int, Int>> {
         var greenUnfinishedTriples = 0
         var blueUnfinishedTriples = 0
         var greenBlockedTriples = 0
@@ -143,7 +157,7 @@ class Position(
      * this function doesn't check this
      * @return true if the game has ended
      */
-    private fun gameEnded(): Boolean {
+    private fun gameEndedDueToSmallAmountOfPieces(): Boolean {
         return greenPiecesAmount < PIECES_TO_FLY || bluePiecesAmount < PIECES_TO_FLY
     }
 
@@ -155,12 +169,12 @@ class Position(
      * @param alpha best score that the maximizing player is assured
      * @param beta best score that the minimizing player is assured
      */
-    private fun analyze(
+    fun analyze(
         depth: UByte,
         alpha: Int = Int.MIN_VALUE,
         beta: Int = Int.MAX_VALUE
     ): Int {
-        if (depth == 0.toUByte() || gameEnded()) {
+        if (depth == 0.toUByte() || gameEndedDueToSmallAmountOfPieces()) {
             return evaluate(depth)
         }
         // abort if this position was already analyzed
@@ -187,7 +201,7 @@ class Position(
              * if we can perform an additional move we don't need to decrease depth
              * in order not to fuck up evaluation sorting
              */
-            val shouldNotDecreaseDepth = (pos.removalCount > 0u && !pos.gameEnded())
+            val shouldNotDecreaseDepth = (pos.removalCount > 0u && !pos.gameEndedDueToSmallAmountOfPieces())
             val result = if (shouldNotDecreaseDepth) {
                 pos.analyze(depth, currentAlpha, currentBeta)
             } else {
@@ -236,7 +250,7 @@ class Position(
 
         generateMoves().forEach {
             val pos = it.producePosition(this)
-            val shouldNotDecreaseDepth = (pos.removalCount > 0u && !pos.gameEnded())
+            val shouldNotDecreaseDepth = (pos.removalCount > 0u && !pos.gameEndedDueToSmallAmountOfPieces())
             val evaluation = if (shouldNotDecreaseDepth) {
                 pos.analyze(depth, alpha, beta)
             } else {
@@ -279,7 +293,7 @@ class Position(
      * @param move the last move we have performed
      * @return the amount of removes we need to perform
      */
-    fun removalAmount(move: Movement): UByte {
+    internal fun removalAmount(move: Movement): UByte {
         if (move.endIndex == null) return 0u
 
         return removeChecker[move.endIndex].count { list ->
@@ -291,7 +305,7 @@ class Position(
      * @return possible movements
      */
     fun generateMoves(): List<Movement> {
-        return when (gameState()) {
+        return when (gameStateWithoutPossibleMovesCheck()) {
             GameState.Placement -> {
                 generatePlacementMovements()
             }
@@ -371,12 +385,20 @@ class Position(
         }
     }
 
-    /**
-     * @return state of the game for the currently playing moves
-     */
     fun gameState(): GameState {
+        return if (generateMoves().isEmpty())
+            GameState.End
+        else
+            gameStateWithoutPossibleMovesCheck()
+    }
+
+    /**
+     * @return state of the game for the currently playing moves doesn't check if user can make a move
+     * reserved for internal use (there is a check in the minimax for possible moves availability)
+     */
+    private fun gameStateWithoutPossibleMovesCheck(): GameState {
         return when {
-            (gameEnded()) -> {
+            (gameEndedDueToSmallAmountOfPieces()) -> {
                 GameState.End
             }
 
@@ -395,41 +417,6 @@ class Position(
 
             else -> GameState.Normal
         }
-    }
-
-    /**
-     * used for easier writing of auto tests
-     */
-    @Suppress("unused")
-    fun displayAsCode(): String {
-        var str = (
-                """
-        Position(
-            mutableListOf(
-                _____                   _____                   _____
-                        _____           _____           _____
-                                _____   _____   _____
-                _____   _____   _____           _____   _____   _____
-                                _____   _____   _____
-                        _____           _____           _____
-                _____                   _____                   _____
-            ),
-            freeGreenPieces = ${freeGreenPieces}u,
-            freeBluePieces = ${freeBluePieces}u,
-            pieceToMove = ${pieceToMove},
-            removalCount = $removalCount
-        )
-        """.trimIndent()
-                )
-        repeat(24) {
-            val newString = when (positions[it]) {
-                null -> "EMPTY"
-                false -> "BLUE_"
-                true -> "GREEN"
-            }
-            str = str.replaceFirst("_____", newString)
-        }
-        return str
     }
 
     /**
@@ -458,20 +445,30 @@ class Position(
      * prints position in human-readable form
      */
     override fun toString(): String {
-        var str = ("""
-            _____                   _____                   _____
-                    _____           _____           _____
-                            _____   _____   _____
-            _____   _____   _____           _____   _____   _____
-                            _____   _____   _____
-                    _____           _____           _____
-            _____                   _____                   _____
-        """.trimIndent())
+        var str = (
+                """
+        Position(
+            arrayOf(
+                _____                   _____                   _____
+                        _____           _____           _____
+                                _____   _____   _____
+                _____   _____   _____           _____   _____   _____
+                                _____   _____   _____
+                        _____           _____           _____
+                _____                   _____                   _____
+            ),
+            freeGreenPieces = ${freeGreenPieces}u,
+            freeBluePieces = ${freeBluePieces}u,
+            pieceToMove = ${pieceToMove},
+            removalCount = $removalCount
+        )
+        """.trimIndent()
+                )
         repeat(24) {
             val newString = when (positions[it]) {
-                null -> "empty"
-                false -> "blue "
-                true -> "green"
+                null -> "EMPTY"
+                false -> "BLUE_"
+                true -> "GREEN"
             }
             str = str.replaceFirst("_____", newString)
         }
@@ -489,7 +486,7 @@ class Position(
      *
      * so don't touch this unless you fully understand this code
      */
-    fun longHashCode(): Long {
+    fun uniqueHashCode(): Long {
         var result = 0L
         // handles removalCount (support for 0..2 removals)
         result += removalCount.toInt() * 205891132094649 // 3^30 = 205891132094649

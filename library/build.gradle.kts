@@ -14,6 +14,12 @@ group = "io.github.kroune"
 version = "1.0.3"
 
 kotlin {
+    @OptIn(org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation::class)
+    abiValidation {
+        // Use the set() function to ensure compatibility with older Gradle versions
+        enabled.set(true)
+    }
+
     jvm()
     androidTarget {
         publishLibraryVariants("release")

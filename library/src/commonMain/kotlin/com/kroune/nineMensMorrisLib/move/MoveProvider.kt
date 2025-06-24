@@ -23,7 +23,7 @@ package com.kroune.nineMensMorrisLib.move
  * in fact, there are other ways to get possible move without mapping them.
  * I just think this is the easiest and the fastest one
  */
-val moveProvider: Array<IntArray> = arrayOf(
+internal val moveProvider: Array<IntArray> = arrayOf(
     intArrayOf(1, 9),
     intArrayOf(0, 2, 4),
     intArrayOf(1, 14),
@@ -54,7 +54,7 @@ val moveProvider: Array<IntArray> = arrayOf(
  * in fact, there are other ways to get possible triples without mapping them.
  * I just think this is the easiest and the fastest one
  */
-val removeChecker: Array<Array<IntArray>> = arrayOf(
+internal val removeChecker: Array<Array<IntArray>> = arrayOf(
     arrayOf(intArrayOf(1, 2), intArrayOf(9, 21)),
     arrayOf(intArrayOf(0, 2), intArrayOf(4, 7)),
     arrayOf(intArrayOf(0, 1), intArrayOf(14, 23)),
@@ -84,7 +84,7 @@ val removeChecker: Array<Array<IntArray>> = arrayOf(
 /**
  * lists all possible triples
  */
-val triplesMap: Array<IntArray> = arrayOf(
+internal val triplesMap: Array<IntArray> = arrayOf(
     intArrayOf(0, 1, 2),
     intArrayOf(3, 4, 5),
     intArrayOf(6, 7, 8),

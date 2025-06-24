@@ -1,0 +1,104 @@
+public final class com/kroune/nineMensMorrisLib/Cache {
+	public static final field INSTANCE Lcom/kroune/nineMensMorrisLib/Cache;
+	public final fun addCache-Zo7BePA (Lcom/kroune/nineMensMorrisLib/Position;BI)V
+	public final fun getCache-EK-6454 (Lcom/kroune/nineMensMorrisLib/Position;B)Ljava/lang/Integer;
+	public final fun wipeCache ()V
+}
+
+public final class com/kroune/nineMensMorrisLib/ConstantsKt {
+	public static final field BLUE_ Z
+	public static final field GREEN Z
+	public static final fun getEMPTY ()Ljava/lang/Boolean;
+	public static final fun getGameStartPosition ()Lcom/kroune/nineMensMorrisLib/Position;
+}
+
+public final class com/kroune/nineMensMorrisLib/GameState : java/lang/Enum {
+	public static final field Companion Lcom/kroune/nineMensMorrisLib/GameState$Companion;
+	public static final field End Lcom/kroune/nineMensMorrisLib/GameState;
+	public static final field Flying Lcom/kroune/nineMensMorrisLib/GameState;
+	public static final field Normal Lcom/kroune/nineMensMorrisLib/GameState;
+	public static final field Placement Lcom/kroune/nineMensMorrisLib/GameState;
+	public static final field Removing Lcom/kroune/nineMensMorrisLib/GameState;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lcom/kroune/nineMensMorrisLib/GameState;
+	public static fun values ()[Lcom/kroune/nineMensMorrisLib/GameState;
+}
+
+public final class com/kroune/nineMensMorrisLib/GameState$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class com/kroune/nineMensMorrisLib/Position {
+	public static final field Companion Lcom/kroune/nineMensMorrisLib/Position$Companion;
+	public synthetic fun <init> ([Ljava/lang/Boolean;BBBBZBILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> ([Ljava/lang/Boolean;BBBBZBLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> ([Ljava/lang/Boolean;IIZI)V
+	public synthetic fun <init> ([Ljava/lang/Boolean;IIZIILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun analyze-d-jbwkw (BII)I
+	public static synthetic fun analyze-d-jbwkw$default (Lcom/kroune/nineMensMorrisLib/Position;BIIILjava/lang/Object;)I
+	public final fun copy ()Lcom/kroune/nineMensMorrisLib/Position;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun evaluate-7apg3OU (B)I
+	public static synthetic fun evaluate-7apg3OU$default (Lcom/kroune/nineMensMorrisLib/Position;BILjava/lang/Object;)I
+	public final fun findBestMove-7apg3OU (B)Lcom/kroune/nineMensMorrisLib/move/Movement;
+	public final fun gameState ()Lcom/kroune/nineMensMorrisLib/GameState;
+	public final fun generateMoves ()Ljava/util/List;
+	public final fun getFreeBluePieces-w2LRezQ ()B
+	public final fun getFreeGreenPieces-w2LRezQ ()B
+	public final fun getPieceToMove ()Z
+	public final fun getPositions ()[Ljava/lang/Boolean;
+	public final fun getRemovalCount-w2LRezQ ()B
+	public final fun setFreeBluePieces-7apg3OU (B)V
+	public final fun setFreeGreenPieces-7apg3OU (B)V
+	public final fun setPieceToMove (Z)V
+	public final fun setPositions ([Ljava/lang/Boolean;)V
+	public final fun setRemovalCount-7apg3OU (B)V
+	public fun toString ()Ljava/lang/String;
+	public final fun uniqueHashCode ()J
+}
+
+public final synthetic class com/kroune/nineMensMorrisLib/Position$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lcom/kroune/nineMensMorrisLib/Position$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lcom/kroune/nineMensMorrisLib/Position;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lcom/kroune/nineMensMorrisLib/Position;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class com/kroune/nineMensMorrisLib/Position$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class com/kroune/nineMensMorrisLib/move/Movement {
+	public static final field Companion Lcom/kroune/nineMensMorrisLib/move/Movement$Companion;
+	public fun <init> (Ljava/lang/Integer;Ljava/lang/Integer;)V
+	public final fun component1 ()Ljava/lang/Integer;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun copy (Ljava/lang/Integer;Ljava/lang/Integer;)Lcom/kroune/nineMensMorrisLib/move/Movement;
+	public static synthetic fun copy$default (Lcom/kroune/nineMensMorrisLib/move/Movement;Ljava/lang/Integer;Ljava/lang/Integer;ILjava/lang/Object;)Lcom/kroune/nineMensMorrisLib/move/Movement;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEndIndex ()Ljava/lang/Integer;
+	public final fun getStartIndex ()Ljava/lang/Integer;
+	public fun hashCode ()I
+	public final fun producePosition (Lcom/kroune/nineMensMorrisLib/Position;)Lcom/kroune/nineMensMorrisLib/Position;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class com/kroune/nineMensMorrisLib/move/Movement$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lcom/kroune/nineMensMorrisLib/move/Movement$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lcom/kroune/nineMensMorrisLib/move/Movement;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lcom/kroune/nineMensMorrisLib/move/Movement;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class com/kroune/nineMensMorrisLib/move/Movement$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+

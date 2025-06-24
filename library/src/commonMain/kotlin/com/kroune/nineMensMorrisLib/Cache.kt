@@ -32,7 +32,7 @@ object Cache {
      * adds new cache if it didn't exist, or it had lower depth
      */
     fun addCache(pos: Position, depth: UByte, evaluation: Int) {
-        val hash = pos.longHashCode()
+        val hash = pos.uniqueHashCode()
         val cacheData = localCache[hash]
         if (cacheData == null || cacheData.first < depth) {
             localCache[hash] = Pair(depth, evaluation)
@@ -43,7 +43,7 @@ object Cache {
      * @returns cached result of position solving or null if no proper cache exists
      */
     fun getCache(pos: Position, neededDepth: UByte): Int? {
-        val hash = pos.longHashCode()
+        val hash = pos.uniqueHashCode()
         val cache = localCache[hash]
         if (cache == null || cache.first < neededDepth) {
             return null
